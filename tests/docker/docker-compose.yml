@@ -1,0 +1,31 @@
+version: "3.1"
+services:
+    www1:
+        build: .
+        volumes:
+            - ../../:/var/www/html/
+        networks:
+            - file-sync-tool
+        ports:
+            - "2311:22"
+    www2:
+        build: .
+        volumes:
+            - ../../:/var/www/html/
+        networks:
+            - file-sync-tool
+        ports:
+            - "2312:22"
+    proxy:
+        build: .
+        volumes:
+            - ../../:/var/www/html/
+        networks:
+            - file-sync-tool
+        ports:
+            - "2313:22"
+volumes:
+    persistent:
+
+networks:
+    file-sync-tool:
