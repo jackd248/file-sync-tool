@@ -9,15 +9,17 @@ Python script to synchronize files from an origin to a target system using [rsyn
 
 This tool is an addon of the [db-sync-tool](https://github.com/jackd248/db-sync-tool).
 
+![Example receiver](docs/images/file-sync-tool-example-receiver.gif)
+
 ## Installation
 
 ### Prerequisite
 
-The script needs python __3.5__ or higher. It is necessary for some additional functionalities to have [pip](https://pypi.org/project/pip/) installed on your local machine. 
+The script needs [python](https://python.org/) __3.5__ or higher. It is necessary for some additional functionalities to have [pip](https://pypi.org/project/pip/) installed on your local machine. 
 
 <a name="install-pip"></a>
 ### pip
-The library can be installed from [PyPI](https://pypi.org/):
+The library can be installed from [PyPI](https://pypi.org/project/file-sync-tool-kmi/):
 ```bash
 $ pip3 install file-sync-tool-kmi
 ```
