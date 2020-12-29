@@ -29,7 +29,6 @@ setuptools.setup(
         'Operating System :: MacOS :: MacOS X',
         'Operating System :: Microsoft :: Windows',
         'Operating System :: POSIX',
-        'Topic :: File sync',
         'Intended Audience :: Developers'
     ],
     python_requires='>=3.5',
