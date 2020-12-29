@@ -31,3 +31,4 @@ Select one of the following scenarios:
 - proxy
 - receiver
 - sender
+- shell

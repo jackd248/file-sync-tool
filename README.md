@@ -70,6 +70,10 @@ Example structure of `config.json` in receiver mode :
 
 ### Documentation
 
+Extend the `config.json` with a `files` section containing multiple transfer entries within the `config`entry. Therefore you have to specify the `origin` source path as well as the `target` destination path of the file sync. Additionally define the rsync `exclude`s for this specific transfer.
+
+In the `config` entry you can also define additional rsync `option`s as a list overwriting the default options.
+
 For further information see the documentation of the [db-sync-tool](https://github.com/jackd248/db-sync-tool).
 
 ## Usage
@@ -93,6 +97,12 @@ $ python3 vendor/kmi/file-sync-tool/file_sync_tool
 
 ```bash
 usage: file_sync_tool [-h] [-f CONFIG_FILE] [-v] [-m] [-o HOST_FILE]
+                      [-th TARGET_HOST] [-tu TARGET_USER]
+                      [-tpw TARGET_PASSWORD] [-tk TARGET_KEY]
+                      [-tpo TARGET_PORT] [-oh ORIGIN_HOST] [-ou ORIGIN_USER]
+                      [-opw ORIGIN_PASSWORD] [-ok ORIGIN_KEY]
+                      [-opo ORIGIN_PORT] [-fo FILES_ORIGIN] [-ft FILES_TARGET]
+                      [-fe FILES_EXCLUDE] [-fop FILES_OPTION]
 
 A tool for automatic file synchronization from and to host systems.
 
@@ -105,6 +115,34 @@ optional arguments:
   -o HOST_FILE, --host-file HOST_FILE
                         Using an additional hosts file for merging hosts
                         information with the configuration file
+  -th TARGET_HOST, --target-host TARGET_HOST
+                        SSH host to target system
+  -tu TARGET_USER, --target-user TARGET_USER
+                        SSH user for target system
+  -tpw TARGET_PASSWORD, --target-password TARGET_PASSWORD
+                        SSH password for target system
+  -tk TARGET_KEY, --target-key TARGET_KEY
+                        File path to SSH key for target system
+  -tpo TARGET_PORT, --target-port TARGET_PORT
+                        SSH port for target system
+  -oh ORIGIN_HOST, --origin-host ORIGIN_HOST
+                        SSH host to origin system
+  -ou ORIGIN_USER, --origin-user ORIGIN_USER
+                        SSH user for origin system
+  -opw ORIGIN_PASSWORD, --origin-password ORIGIN_PASSWORD
+                        SSH password for origin system
+  -ok ORIGIN_KEY, --origin-key ORIGIN_KEY
+                        File path to SSH key for origin system
+  -opo ORIGIN_PORT, --origin-port ORIGIN_PORT
+                        SSH port for origin system
+  -fo FILES_ORIGIN, --files-origin FILES_ORIGIN
+                        File path for origin source of file sync
+  -ft FILES_TARGET, --files-target FILES_TARGET
+                        File path for target destination of file sync
+  -fe FILES_EXCLUDE, --files-exclude FILES_EXCLUDE
+                        Excludes for file sync
+  -fop FILES_OPTION, --files-option FILES_OPTION
+                        Additional rsync options
 ```
 
 If you haven't declare a path to a SSH key, during the script execution you are requested to enter the SSH password for the given user in the shell argument or the `config.json` to enable a SSH connection for the remote system. 
