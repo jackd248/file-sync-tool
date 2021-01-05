@@ -6,6 +6,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.0] - 2021-01-05
+- [CleanUp] Change Doctype Comments
+- [Bugfix] Missing host file
+- [Task] Additional shell arguments
+- [Bugfix] Invalid setup classifier
+- [Test] Improved tests
+- [Doc] Advanced documentation
+
 ## [0.1.0] - 2020-12-28
 - [Doc] Init README
 - [Task] Init project
