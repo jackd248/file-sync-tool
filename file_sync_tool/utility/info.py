@@ -11,7 +11,6 @@ def print_header(mute):
     :param mute: Boolean
     :return:
     """
-
     if mute is False:
         print(output.CliFormat.BLACK + '##############################################' + output.CliFormat.ENDC)
         print(output.CliFormat.BLACK + '#                                            #' + output.CliFormat.ENDC)

@@ -20,28 +20,28 @@ default_options = [
     '--chmod=D2770,F660'
 ]
 
-# Temporary data directionary (for PROXY mode)
+# Temporary data directory (for PROXY mode)
 temp_data_dir = None
 
 
 def get_password_environment(client):
-    '''
+    """
     Optionally create a password environment variable for sshpass password authentication
     https://www.redhat.com/sysadmin/ssh-automation-sshpass
     :param client: String
     :return:
-    '''
+    """
     if system.config['use_sshpass'] and not 'ssh_key' in system.config[client] and 'password' in system.config[client]:
         return f'SSHPASS=\'{system.config[client]["password"]}\' '
     return ''
 
 
 def get_authorization(client=mode.Client.ORIGIN):
-    '''
+    """
     Define authorization arguments for rsync command
     :param client: String
     :return: String
-    '''
+    """
     _ssh_key = None
 
     if 'ssh_key' in system.config[client]:
@@ -60,21 +60,21 @@ def get_authorization(client=mode.Client.ORIGIN):
 
 
 def get_host(client):
-    '''
+    """
     Return user@host if client is not local
     :param client: String
     :return: String
-    '''
+    """
     if mode.is_remote(client):
         return f'{system.config[client]["user"]}@{system.config[client]["host"]}:'
     return ''
 
 
 def get_options():
-    '''
+    """
     Prepare rsync options with stored default options and provided addtional options
     :return: String
-    '''
+    """
     _options = f'{" ".join(default_options)}'
     if 'option' in system.config['files']:
         _options += f'{" ".join(system.config["files"]["option"])}'
@@ -82,11 +82,11 @@ def get_options():
 
 
 def get_excludes(excludes):
-    '''
+    """
     Prepare rsync excludes as arguments
     :param excludes:
     :return:
-    '''
+    """
     _excludes = ''
     for exclude in excludes:
         _excludes += f'--exclude {exclude} '
@@ -94,11 +94,11 @@ def get_excludes(excludes):
 
 
 def read_stats(stats):
-    '''
+    """
     Read rsync stats and print a summary
     :param stats: String
     :return:
-    '''
+    """
     if system.config['verbose']:
         print(f'{output.Subject.DEBUG}{output.CliFormat.BLACK}{stats}{output.CliFormat.ENDC}')
 
@@ -113,22 +113,22 @@ def read_stats(stats):
 
 
 def parse_string(string, regex):
-    '''
+    """
     Parse string by given regex
     :param string: String
     :param regex: String
     :return:
-    '''
+    """
     _file_size_pattern = regex
     _regex_matcher = re.compile(_file_size_pattern)
     return _regex_matcher.findall(string)
 
 
 def generate_temp_dir_name():
-    '''
+    """
     Generate a temporary directory name, e.g. _tmp_28-12-2020_15-59
     :return:
-    '''
+    """
     global temp_data_dir
     _now = datetime.datetime.now()
     temp_data_dir = f'/tmp/_tmp_{_now.strftime("%d-%m-%Y_%H-%M")}'

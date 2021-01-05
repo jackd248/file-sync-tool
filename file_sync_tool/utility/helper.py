@@ -24,6 +24,7 @@ def check_rsync_version():
         f'rsync version {_version}'
     )
 
+
 def check_sshpass_version():
     """
     Check sshpass version
@@ -48,12 +49,12 @@ def check_sshpass_version():
 
 
 def parse_version(output):
-    '''
+    """
     Parse version out of console output
     https://stackoverflow.com/a/60730346
     :param output: String
     :return:
-    '''
+    """
     _version_pattern = r'\d+(=?\.(\d+(=?\.(\d+)*)*)*)*'
     _regex_matcher = re.compile(_version_pattern)
     _version = _regex_matcher.search(output)
@@ -64,10 +65,10 @@ def parse_version(output):
 
 
 def check_authorizations():
-    '''
+    """
     Check authorization for clients
     :return:
-    '''
+    """
     if system.config['use_sshpass']:
         # When using sshpass, check for passwords
         system.check_authorization(mode.Client.ORIGIN)

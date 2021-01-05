@@ -6,10 +6,10 @@ from file_sync_tool.transfer import utility
 
 
 def transfer_files():
-    '''
+    """
     Transfering configured files between clients
     :return:
-    '''
+    """
     for config in system.config['files']['config']:
         output.message(
             output.Subject.INFO,
