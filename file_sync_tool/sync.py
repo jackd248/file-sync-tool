@@ -29,7 +29,7 @@ class Sync:
         info.print_header(mute)
         system.check_args_options(
             config_file=config_file,
-            host_file=None,
+            host_file=host_file,
             verbose=verbose,
             mute=mute
         )
