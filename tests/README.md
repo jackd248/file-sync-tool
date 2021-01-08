@@ -32,3 +32,4 @@ Select one of the following scenarios:
 - receiver
 - sender
 - shell
+- module
