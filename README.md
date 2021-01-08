@@ -158,9 +158,9 @@ if __name__ == "__main__":
     sync.Sync(config={}, args*)
 ```
 
-## Build
+## Release Guide
 
-The packaging process of the python module is described on [python.org](https://packaging.python.org/tutorials/packaging-projects/).
+A detailed guide is available to release a new version. See [here](docs/RELEASE.md).
 
 ## Tests
 
