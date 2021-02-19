@@ -50,6 +50,7 @@ def synchronize(origin_path, target_path, exclude, force_remote=None):
     :param force_remote: String Client, which will be forced as remote client. Necessary for proxy transfer.
     :return:
     """
+    _remote_client = None
     if mode.is_remote(mode.Client.ORIGIN) and force_remote != mode.Client.TARGET:
         _remote_client = mode.Client.ORIGIN
         _origin_subject = f'{output.Subject.ORIGIN}{output.CliFormat.BLACK}[REMOTE]{output.CliFormat.ENDC} '
@@ -58,6 +59,9 @@ def synchronize(origin_path, target_path, exclude, force_remote=None):
         _remote_client = mode.Client.TARGET
         _origin_subject = f'{output.Subject.ORIGIN}{output.CliFormat.BLACK}[LOCAL]{output.CliFormat.ENDC} '
         _target_subject = f'{output.Subject.TARGET}{output.CliFormat.BLACK}[REMOTE]{output.CliFormat.ENDC} '
+    elif not mode.is_remote(mode.Client.TARGET) and not mode.is_remote(mode.Client.ORIGIN):
+        _origin_subject = f'{output.Subject.ORIGIN}{output.CliFormat.BLACK}[LOCAL]{output.CliFormat.ENDC} '
+        _target_subject = f'{output.Subject.TARGET}{output.CliFormat.BLACK}[LOCAL]{output.CliFormat.ENDC} '
 
     _origin_name = helper.get_ssh_host_name(mode.Client.ORIGIN, True) if _remote_client == mode.Client.ORIGIN else ''
     _target_name = helper.get_ssh_host_name(mode.Client.TARGET, True) if _remote_client == mode.Client.TARGET else ''

@@ -31,18 +31,23 @@ def get_password_environment(client):
     :param client: String
     :return:
     """
+    if not client:
+        return ''
+
     if system.config['use_sshpass'] and not 'ssh_key' in system.config[client] and 'password' in system.config[client]:
         return f'SSHPASS=\'{system.config[client]["password"]}\' '
     return ''
 
 
-def get_authorization(client=mode.Client.ORIGIN):
+def get_authorization(client):
     """
     Define authorization arguments for rsync command
     :param client: String
     :return: String
     """
     _ssh_key = None
+    if not client:
+        return ''
 
     if 'ssh_key' in system.config[client]:
         _ssh_key = system.config[mode.Client.ORIGIN]['ssh_key']

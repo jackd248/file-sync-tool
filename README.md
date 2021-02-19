@@ -84,7 +84,7 @@ Run the python script via command line.
 
 Installed via [pip](#install-pip):
 ```bash
-$ python3 file_sync_tool
+$ file_sync_tool
 ```
 
 Installed via [composer](#install-composer):

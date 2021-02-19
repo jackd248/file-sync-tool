@@ -33,3 +33,4 @@ Select one of the following scenarios:
 - sender
 - shell
 - module
+- local
