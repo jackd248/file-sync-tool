@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.0] - 2021-03-07
+- [Task] Sync modes "Sync local" and "Sync remote"
+- [Bugfix] Fix mode distinction
+
 ## [0.3.0] - 2021-02-19
 - [Test] Module test integrated
 - [Doc] Release guide
