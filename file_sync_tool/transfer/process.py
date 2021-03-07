@@ -2,6 +2,7 @@
 # -*- coding: future_fstrings -*-
 
 from db_sync_tool.utility import mode, system, output, helper
+from db_sync_tool.remote import client as remote_client
 from file_sync_tool.transfer import utility
 
 
@@ -17,22 +18,30 @@ def transfer_files():
         )
 
         if mode.get_sync_mode() == mode.SyncMode.PROXY:
-            # Proxy mode: Transfering from origin to local and from local to target
+            # Proxy mode: Transferring from origin to local and from local to target
             utility.generate_temp_dir_name()
             helper.check_and_create_dump_dir(mode.Client.LOCAL, utility.temp_data_dir)
             synchronize(
                 origin_path=config[mode.Client.ORIGIN],
                 target_path=utility.temp_data_dir,
                 exclude=config['exclude'],
-                force_remote=mode.Client.ORIGIN
+                client=mode.Client.ORIGIN
             )
             synchronize(
                 origin_path=f'{utility.temp_data_dir}/*',
                 target_path=config[mode.Client.TARGET],
                 exclude=config['exclude'],
-                force_remote=mode.Client.TARGET
+                client=mode.Client.TARGET
             )
             utility.remove_temporary_dir()
+        if mode.get_sync_mode() == mode.SyncMode.SYNC_REMOTE:
+            synchronize(
+                origin_path=config[mode.Client.ORIGIN],
+                target_path=config[mode.Client.TARGET],
+                exclude=config['exclude'],
+                client=mode.Client.ORIGIN,
+                force_remote=True
+            )
         else:
             synchronize(
                 origin_path=config[mode.Client.ORIGIN],
@@ -41,21 +50,26 @@ def transfer_files():
             )
 
 
-def synchronize(origin_path, target_path, exclude, force_remote=None):
+def synchronize(origin_path, target_path, exclude, client=mode.Client.LOCAL, force_remote=False):
     """
     Using rsync command to synchronize files between systems
     :param origin_path: String
     :param target_path: String
     :param exclude: List
-    :param force_remote: String Client, which will be forced as remote client. Necessary for proxy transfer.
+    :param client: String Client, which will be forced as remote client. Necessary for proxy transfer.
+    :param force_remote: Boolean
     :return:
     """
     _remote_client = None
-    if mode.is_remote(mode.Client.ORIGIN) and force_remote != mode.Client.TARGET:
+    if force_remote:
+        remote_client.load_ssh_client_origin()
+        _origin_subject = f'{output.Subject.ORIGIN}{output.CliFormat.BLACK}[REMOTE]{output.CliFormat.ENDC} '
+        _target_subject = f'{output.Subject.TARGET}{output.CliFormat.BLACK}[REMOTE]{output.CliFormat.ENDC} '
+    elif mode.is_remote(mode.Client.ORIGIN) and client != mode.Client.TARGET:
         _remote_client = mode.Client.ORIGIN
         _origin_subject = f'{output.Subject.ORIGIN}{output.CliFormat.BLACK}[REMOTE]{output.CliFormat.ENDC} '
         _target_subject = f'{output.Subject.TARGET}{output.CliFormat.BLACK}[LOCAL]{output.CliFormat.ENDC} '
-    elif mode.is_remote(mode.Client.TARGET) and force_remote != mode.Client.ORIGIN:
+    elif mode.is_remote(mode.Client.TARGET) and client != mode.Client.ORIGIN:
         _remote_client = mode.Client.TARGET
         _origin_subject = f'{output.Subject.ORIGIN}{output.CliFormat.BLACK}[LOCAL]{output.CliFormat.ENDC} '
         _target_subject = f'{output.Subject.TARGET}{output.CliFormat.BLACK}[REMOTE]{output.CliFormat.ENDC} '
@@ -86,7 +100,7 @@ def synchronize(origin_path, target_path, exclude, force_remote=None):
         f'{utility.get_password_environment(_remote_client)}rsync {utility.get_options()} '
         f'{utility.get_authorization(_remote_client)} {utility.get_excludes(exclude)}'
         f'{_origin_user_host}{origin_path} {_target_user_host}{target_path}',
-        mode.Client.LOCAL,
+        client,
         True
     )
     utility.read_stats(_output)

@@ -34,6 +34,7 @@ class Sync:
             mute=mute
         )
         system.get_configuration(config)
+        helper.adjust_sync_mode()
         helper.check_rsync_version()
         helper.check_sshpass_version()
         helper.check_authorizations()

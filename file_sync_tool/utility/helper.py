@@ -81,3 +81,14 @@ def check_authorizations():
             output.Subject.INFO,
             f'Suggestion: Install {output.CliFormat.BOLD}sshpass{output.CliFormat.ENDC} to avoid multiple input of ssh passwords'
         )
+
+
+def adjust_sync_mode():
+    """
+
+    :return:
+    """
+    if mode.get_sync_mode() == mode.SyncMode.DUMP_LOCAL:
+        mode.sync_mode = mode.SyncMode.SYNC_LOCAL
+    if mode.get_sync_mode() == mode.SyncMode.DUMP_REMOTE:
+        mode.sync_mode = mode.SyncMode.SYNC_REMOTE

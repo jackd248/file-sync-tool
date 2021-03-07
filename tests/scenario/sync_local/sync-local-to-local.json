@@ -1,0 +1,26 @@
+{
+  "target": {
+  },
+  "origin": {
+  },
+  "files": {
+    "option": [
+    ],
+    "config": [
+      {
+        "origin": "/var/www/html/tests/files/www1/dir1/",
+        "target": "/var/www/html/tests/files/www2/dir1/",
+        "exclude": [
+          "dummy2.file"
+        ]
+      },
+      {
+        "origin": "/var/www/html/tests/files/www1/dir2/",
+        "target": "/var/www/html/tests/files/www2/dir2/",
+        "exclude": [
+          "dummy2.file"
+        ]
+      }
+    ]
+  }
+}
