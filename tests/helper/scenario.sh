@@ -19,6 +19,8 @@ if [ "$#" -eq "0" ]; then
   sh scenario/shell/test.sh $VERBOSE
   sh scenario/module/test.sh $VERBOSE
   sh scenario/local/test.sh $VERBOSE
+  sh scenario/sync_local/test.sh $VERBOSE
+  sh scenario/sync_remote/test.sh $VERBOSE
 else
   # Default is mute mode
   if [ -z "$2" ]; then

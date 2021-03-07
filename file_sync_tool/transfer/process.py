@@ -25,13 +25,13 @@ def transfer_files():
                 origin_path=config[mode.Client.ORIGIN],
                 target_path=utility.temp_data_dir,
                 exclude=config['exclude'],
-                client=mode.Client.ORIGIN
+                pseudo_client=mode.Client.ORIGIN
             )
             synchronize(
                 origin_path=f'{utility.temp_data_dir}/*',
                 target_path=config[mode.Client.TARGET],
                 exclude=config['exclude'],
-                client=mode.Client.TARGET
+                pseudo_client=mode.Client.TARGET
             )
             utility.remove_temporary_dir()
         if mode.get_sync_mode() == mode.SyncMode.SYNC_REMOTE:
@@ -50,13 +50,14 @@ def transfer_files():
             )
 
 
-def synchronize(origin_path, target_path, exclude, client=mode.Client.LOCAL, force_remote=False):
+def synchronize(origin_path, target_path, exclude, client=mode.Client.LOCAL, pseudo_client=None, force_remote=False):
     """
     Using rsync command to synchronize files between systems
     :param origin_path: String
     :param target_path: String
     :param exclude: List
-    :param client: String Client, which will be forced as remote client. Necessary for proxy transfer.
+    :param client: String
+    :param pseudo_client: String Client, which will be forced as remote client. Necessary for proxy transfer.
     :param force_remote: Boolean
     :return:
     """
@@ -65,11 +66,11 @@ def synchronize(origin_path, target_path, exclude, client=mode.Client.LOCAL, for
         remote_client.load_ssh_client_origin()
         _origin_subject = f'{output.Subject.ORIGIN}{output.CliFormat.BLACK}[REMOTE]{output.CliFormat.ENDC} '
         _target_subject = f'{output.Subject.TARGET}{output.CliFormat.BLACK}[REMOTE]{output.CliFormat.ENDC} '
-    elif mode.is_remote(mode.Client.ORIGIN) and client != mode.Client.TARGET:
+    elif mode.is_remote(mode.Client.ORIGIN) and pseudo_client != mode.Client.TARGET:
         _remote_client = mode.Client.ORIGIN
         _origin_subject = f'{output.Subject.ORIGIN}{output.CliFormat.BLACK}[REMOTE]{output.CliFormat.ENDC} '
         _target_subject = f'{output.Subject.TARGET}{output.CliFormat.BLACK}[LOCAL]{output.CliFormat.ENDC} '
-    elif mode.is_remote(mode.Client.TARGET) and client != mode.Client.ORIGIN:
+    elif mode.is_remote(mode.Client.TARGET) and pseudo_client != mode.Client.ORIGIN:
         _remote_client = mode.Client.TARGET
         _origin_subject = f'{output.Subject.ORIGIN}{output.CliFormat.BLACK}[LOCAL]{output.CliFormat.ENDC} '
         _target_subject = f'{output.Subject.TARGET}{output.CliFormat.BLACK}[REMOTE]{output.CliFormat.ENDC} '

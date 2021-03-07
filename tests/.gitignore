@@ -1,2 +1,5 @@
-files/
+files/www1/dir1/
+files/www1/dir2/
+files/www2/dir1/
+files/www2/dir2/
 !.env

@@ -3,6 +3,7 @@
 #
 # Sync mode: SYNC_LOCAL
 #
+sh helper/cleanup.sh
 sh helper/dummy.sh www1
 
 printf "\033[94m[TEST]\033[m Sync mode: SYNC_LOCAL"
@@ -17,4 +18,3 @@ else
     echo " \033[91m✘\033[m"
     exit 1
 fi
-sh helper/cleanup.sh
