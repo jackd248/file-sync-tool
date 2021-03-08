@@ -11,43 +11,46 @@ def transfer_files():
     Transfering configured files between clients
     :return:
     """
-    for config in system.config['files']['config']:
-        output.message(
-            output.Subject.INFO,
-            f'Starting rsync file transfer'
-        )
+    if 'files' in system.config:
+        for config in system.config['files']['config']:
+            output.message(
+                output.Subject.INFO,
+                f'Starting rsync file transfer'
+            )
 
-        if mode.get_sync_mode() == mode.SyncMode.PROXY:
-            # Proxy mode: Transferring from origin to local and from local to target
-            utility.generate_temp_dir_name()
-            helper.check_and_create_dump_dir(mode.Client.LOCAL, utility.temp_data_dir)
-            synchronize(
-                origin_path=config[mode.Client.ORIGIN],
-                target_path=utility.temp_data_dir,
-                exclude=config['exclude'],
-                pseudo_client=mode.Client.ORIGIN
-            )
-            synchronize(
-                origin_path=f'{utility.temp_data_dir}/*',
-                target_path=config[mode.Client.TARGET],
-                exclude=config['exclude'],
-                pseudo_client=mode.Client.TARGET
-            )
-            utility.remove_temporary_dir()
-        if mode.get_sync_mode() == mode.SyncMode.SYNC_REMOTE:
-            synchronize(
-                origin_path=config[mode.Client.ORIGIN],
-                target_path=config[mode.Client.TARGET],
-                exclude=config['exclude'],
-                client=mode.Client.ORIGIN,
-                force_remote=True
-            )
-        else:
-            synchronize(
-                origin_path=config[mode.Client.ORIGIN],
-                target_path=config[mode.Client.TARGET],
-                exclude=config['exclude']
-            )
+            if mode.get_sync_mode() == mode.SyncMode.PROXY:
+                # Proxy mode: Transferring from origin to local and from local to target
+                utility.generate_temp_dir_name()
+                helper.check_and_create_dump_dir(mode.Client.LOCAL, utility.temp_data_dir)
+                synchronize(
+                    origin_path=config[mode.Client.ORIGIN],
+                    target_path=utility.temp_data_dir,
+                    exclude=config['exclude'],
+                    pseudo_client=mode.Client.ORIGIN
+                )
+                synchronize(
+                    origin_path=f'{utility.temp_data_dir}/*',
+                    target_path=config[mode.Client.TARGET],
+                    exclude=config['exclude'],
+                    pseudo_client=mode.Client.TARGET
+                )
+                utility.remove_temporary_dir()
+            if mode.get_sync_mode() == mode.SyncMode.SYNC_REMOTE:
+                synchronize(
+                    origin_path=config[mode.Client.ORIGIN],
+                    target_path=config[mode.Client.TARGET],
+                    exclude=config['exclude'],
+                    client=mode.Client.ORIGIN,
+                    force_remote=True
+                )
+            else:
+                synchronize(
+                    origin_path=config[mode.Client.ORIGIN],
+                    target_path=config[mode.Client.TARGET],
+                    exclude=config['exclude']
+                )
+    else:
+        f'{output.Subject.WARNING} No file sync configuration provided'
 
 
 def synchronize(origin_path, target_path, exclude, client=mode.Client.LOCAL, pseudo_client=None, force_remote=False):
