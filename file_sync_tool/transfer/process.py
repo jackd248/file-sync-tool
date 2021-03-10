@@ -18,6 +18,9 @@ def transfer_files():
                 f'Starting rsync file transfer'
             )
 
+            if 'exclude' not in config:
+                config['exclude'] = []
+
             if mode.get_sync_mode() == mode.SyncMode.PROXY:
                 # Proxy mode: Transferring from origin to local and from local to target
                 utility.generate_temp_dir_name()
