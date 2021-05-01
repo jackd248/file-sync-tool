@@ -38,7 +38,7 @@ def transfer_files():
                     pseudo_client=mode.Client.TARGET
                 )
                 utility.remove_temporary_dir()
-            if mode.get_sync_mode() == mode.SyncMode.SYNC_REMOTE:
+            elif mode.get_sync_mode() == mode.SyncMode.SYNC_REMOTE:
                 synchronize(
                     origin_path=config[mode.Client.ORIGIN],
                     target_path=config[mode.Client.TARGET],
