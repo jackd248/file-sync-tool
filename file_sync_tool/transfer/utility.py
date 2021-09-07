@@ -55,12 +55,12 @@ def get_authorization(client):
     _ssh_port = system.config[client]['port'] if 'port' in system.config[client] else 22
 
     if _ssh_key is None:
-        if system.config['use_sshpass']:
+        if system.config['use_sshpass'] and get_password_environment(client):
             # In combination with SSHPASS environment variable
             # https://www.redhat.com/sysadmin/ssh-automation-sshpass
             return f'--rsh="sshpass -e ssh -p{_ssh_port} -o StrictHostKeyChecking=no -l {system.config[client]["user"]}"'
         else:
-            return f'-e "ssh -p{_ssh_port}"'
+            return f'-e "ssh -p{_ssh_port} -o StrictHostKeyChecking=no"'
     else:
         # Provide ssh key file path for ssh authentication
         return f'-e "ssh -i {_ssh_key} -p{_ssh_port}"'
