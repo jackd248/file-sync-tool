@@ -83,6 +83,25 @@ def check_authorizations():
         )
 
 
+def dict_to_args(dict):
+    """
+    Convert an dictionary to a args list
+    :param dict: Dictionary
+    :return: List
+    """
+    _args = []
+    for key, val in dict.items():
+        if isinstance(val, bool):
+            if val:
+                _args.append(f'--{key}')
+        else:
+            _args.append(f'--{key}')
+            _args.append(str(val))
+    if len(_args) == 0:
+        return None
+    return _args
+
+
 def adjust_sync_mode():
     """
 

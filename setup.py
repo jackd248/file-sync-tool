@@ -34,7 +34,7 @@ setuptools.setup(
     python_requires='>=3.5',
     install_requires=[
         "future-fstrings>=1.2"
-        "db-sync-tool-kmi>=2.2.5",
+        "db-sync-tool-kmi>=2.9.0",
     ],
     entry_points={
         'console_scripts': [

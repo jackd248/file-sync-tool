@@ -3,10 +3,10 @@
 
 import argparse, sys, os
 from collections import defaultdict
-from db_sync_tool.utility import helper
 # Workaround for ModuleNotFoundError
 sys.path.append(os.getcwd())
 from file_sync_tool import sync
+from file_sync_tool.utility import helper
 
 
 def main(args={}):

@@ -17,7 +17,8 @@ class Sync:
                  verbose=False,
                  mute=False,
                  host_file=None,
-                 config={}):
+                 config=None,
+                 args=None):
         """
         Initialization
         :param config_file:
@@ -25,6 +26,7 @@ class Sync:
         :param mute:
         :param host_file:
         :param config:
+        :param args:
         """
         info.print_header(mute)
         system.check_args_options(
@@ -33,7 +35,7 @@ class Sync:
             verbose=verbose,
             mute=mute
         )
-        system.get_configuration(config)
+        system.get_configuration(config, args)
         helper.adjust_sync_mode()
         helper.check_rsync_version()
         helper.check_sshpass_version()
