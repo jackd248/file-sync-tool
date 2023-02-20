@@ -16,13 +16,12 @@ def main(args={}):
     :return:
     """
     args = get_arguments(args)
-    config = build_config(args)
     sync.Sync(
         config_file=args.config_file,
         verbose=args.verbose,
         mute=args.mute,
         host_file=args.host_file,
-        config=config
+        args=args
     )
 
 
@@ -107,67 +106,6 @@ def get_arguments(args):
                         type=str)
 
     return parser.parse_args(helper.dict_to_args(args))
-
-
-def build_config(args):
-    """
-    Building an optional config
-    :param args:
-    :return:
-    """
-    config = defaultdict(dict)
-    config['target'] = defaultdict(dict)
-    config['origin'] = defaultdict(dict)
-
-    if not args.target_host is None:
-        config['target']['host'] = args.target_host
-
-    if not args.target_user is None:
-        config['target']['user'] = args.target_user
-
-    if not args.target_password is None:
-        config['target']['password'] = args.target_password
-
-    if not args.target_key is None:
-        config['target']['ssh_key'] = args.target_key
-
-    if not args.target_port is None:
-        config['target']['port'] = args.target_port
-
-    if not args.origin_host is None:
-        config['origin']['host'] = args.origin_host
-
-    if not args.origin_user is None:
-        config['origin']['user'] = args.origin_user
-
-    if not args.origin_password is None:
-        config['origin']['password'] = args.origin_password
-
-    if not args.origin_key is None:
-        config['origin']['ssh_key'] = args.origin_key
-
-    if not args.origin_port is None:
-        config['origin']['port'] = args.origin_port
-
-    if not args.files_origin is None:
-        if 'config' not in config['files']:
-            config['files']['config'] = []
-            config['files']['config'].append({})
-        config['files']['config'][0]['origin'] = args.files_origin
-
-    if not args.files_target is None:
-        if 'config' not in config['files']:
-            config['files']['config'] = []
-            config['files']['config'].append({})
-        config['files']['config'][0]['target'] = args.files_target
-
-    if not args.files_exclude is None:
-        config['files']['config'][0]['exclude'] = args.files_exclude.split(',')
-
-    if not args.files_option is None:
-        config['files']['option'] = args.files_option.split(',')
-
-    return config
 
 
 if __name__ == "__main__":

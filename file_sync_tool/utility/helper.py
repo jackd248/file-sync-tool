@@ -111,3 +111,62 @@ def adjust_sync_mode():
         mode.sync_mode = mode.SyncMode.SYNC_LOCAL
     if mode.get_sync_mode() == mode.SyncMode.DUMP_REMOTE:
         mode.sync_mode = mode.SyncMode.SYNC_REMOTE
+
+
+def extend_config(args):
+    """
+    Extending optional config
+    :param args:
+    :return:
+    """
+    config = system.config
+
+    if not args.target_host is None:
+        config['target']['host'] = args.target_host
+
+    if not args.target_user is None:
+        config['target']['user'] = args.target_user
+
+    if not args.target_password is None:
+        config['target']['password'] = args.target_password
+
+    if not args.target_key is None:
+        config['target']['ssh_key'] = args.target_key
+
+    if not args.target_port is None:
+        config['target']['port'] = args.target_port
+
+    if not args.origin_host is None:
+        config['origin']['host'] = args.origin_host
+
+    if not args.origin_user is None:
+        config['origin']['user'] = args.origin_user
+
+    if not args.origin_password is None:
+        config['origin']['password'] = args.origin_password
+
+    if not args.origin_key is None:
+        config['origin']['ssh_key'] = args.origin_key
+
+    if not args.origin_port is None:
+        config['origin']['port'] = args.origin_port
+
+    if not args.files_origin is None:
+        if 'config' not in config['files']:
+            config['files']['config'] = []
+            config['files']['config'].append({})
+        config['files']['config'][0]['origin'] = args.files_origin
+
+    if not args.files_target is None:
+        if 'config' not in config['files']:
+            config['files']['config'] = []
+            config['files']['config'].append({})
+        config['files']['config'][0]['target'] = args.files_target
+
+    if not args.files_exclude is None:
+        config['files']['config'][0]['exclude'] = args.files_exclude.split(',')
+
+    if not args.files_option is None:
+        config['files']['option'] = args.files_option.split(',')
+
+    return config

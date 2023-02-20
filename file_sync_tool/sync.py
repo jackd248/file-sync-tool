@@ -35,7 +35,9 @@ class Sync:
             verbose=verbose,
             mute=mute
         )
-        system.get_configuration(config, args)
+        system.get_configuration(config, None)
+        # workaround for extending config with args
+        system.config=helper.extend_config(args)
         helper.adjust_sync_mode()
         helper.check_rsync_version()
         helper.check_sshpass_version()
