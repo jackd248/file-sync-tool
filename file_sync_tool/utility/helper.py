@@ -121,6 +121,9 @@ def extend_config(args):
     """
     config = system.config
 
+    if args is None or not args:
+        return config
+
     if not args.target_host is None:
         config['target']['host'] = args.target_host
 
