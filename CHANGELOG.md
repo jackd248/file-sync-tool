@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.9] - 2025-04-10
+- docs: add download count for python package
+- fix: add missing comma in install_requires section
+
 ## [0.4.8] - 2023-02-21
 - [Bugfix] Empty args handling
 
